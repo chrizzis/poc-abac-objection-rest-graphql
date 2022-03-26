@@ -1,0 +1,67 @@
+{
+  "name": "express-pg-knex-objection-jwt",
+  "version": "1.0.0",
+  "description": "template for a basic express server with tests",
+  "main": "src/index.js",
+  "scripts": {
+    "k:srun": "NODE_ENV=development knex seed:run --env development",
+    "k:latest": "NODE_ENV=development knex migrate:latest --env development",
+    "k:rollback": "NODE_ENV=development knex migrate:rollback --env development",
+    "test": "NODE_ENV=test node --experimental-vm-modules node_modules/jest/bin/jest.js --detectOpenHandles --setupFiles dotenv/config --watch --verbose",
+    "test:once": "NODE_ENV=test node --experimental-vm-modules node_modules/jest/bin/jest.js --detectOpenHandles --setupFiles dotenv/config --verbose",
+    "test:feature": "NODE_ENV=test LOG_LEVEL=debug node --experimental-vm-modules node_modules/jest/bin/jest.js ./tests/integration/graphql.spec.js --detectOpenHandles --setupFiles dotenv/config --verbose",
+    "test:feature:watch": "NODE_ENV=test LOG_LEVEL=debug node --experimental-vm-modules node_modules/jest/bin/jest.js ./tests/integration/graphql.spec.js --detectOpenHandles --setupFiles dotenv/config --watch --verbose",
+    "start": "NODE_ENV=production node ./src/index.js",
+    "dev": "NODE_ENV=development nodemon ./src/index.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/chrizzis/express-pg-knex-objection-jwt.git"
+  },
+  "author": "Christian Seabrook",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/chrizzis/express-pg-knex-objection-jwt/issues"
+  },
+  "homepage": "https://github.com/chrizzis/express-pg-knex-objection-jwt#readme",
+  "type": "module",
+  "engines": {
+    "node": "16.x",
+    "npm": "8.x",
+    "yarn": "1.x"
+  },
+  "jest": {
+    "testEnvironment": "jest-environment-node",
+    "verbose": true,
+    "collectCoverage": true,
+    "transform": {},
+    "clearMocks": true,
+    "roots": [
+      "<rootDir>"
+    ],
+    "globalSetup": "<rootDir>/tests/globalSetup.js",
+    "globalTeardown": "<rootDir>/tests/globalTeardown.js",
+    "setupFilesAfterEnv": [
+      "<rootDir>/tests/testSetup.js"
+    ]
+  },
+  "dependencies": {
+    "@casl/ability": "^5.4.3",
+    "apollo-server-core": "^3.6.4",
+    "apollo-server-express": "^3.6.4",
+    "cors": "^2.8.5",
+    "dotenv": "^16.0.0",
+    "express": "^4.17.3",
+    "graphql": "^16.3.0",
+    "jsonwebtoken": "^8.5.1",
+    "knex": "^1.0.3",
+    "objection": "^3.0.1",
+    "objection-graphql": "^0.4.5",
+    "pg": "^8.7.3"
+  },
+  "devDependencies": {
+    "jest": "^27.5.1",
+    "nodemon": "^2.0.15",
+    "supertest": "^6.2.2"
+  }
+}

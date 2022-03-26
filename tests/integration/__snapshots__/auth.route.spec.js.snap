@@ -1,0 +1,28 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`auth.route.js /login successful login should return status 200 with token 1`] = `
+Object {
+  "aud": "jwt-node",
+  "email": "alice@email.com",
+  "firstName": "Alice",
+  "id": 1,
+  "iss": "jwt-node",
+  "lastName": "Smith",
+  "password": "alice",
+  "role": "user",
+  "sub": "1",
+  "username": "alice-immutable",
+}
+`;
+
+exports[`auth.route.js /login successful login should return status 200 with token 2`] = `
+Object {
+  "email": "alice@email.com",
+  "firstName": "Alice",
+  "id": 1,
+  "lastName": "Smith",
+  "password": "alice",
+  "role": "user",
+  "username": "alice-immutable",
+}
+`;

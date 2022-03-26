@@ -1,0 +1,65 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`project.route.js GET /projects It should return a list of projects filtered by acl for anonymous user 1`] = `
+Array [
+  Object {
+    "id": 4,
+    "ownerId": 1,
+    "published": true,
+    "title": "Published project by Alice",
+  },
+  Object {
+    "id": 5,
+    "ownerId": 2,
+    "published": true,
+    "title": "Published project by Bob",
+  },
+  Object {
+    "id": 6,
+    "ownerId": 3,
+    "published": true,
+    "title": "Published project by Eve",
+  },
+]
+`;
+
+exports[`project.route.js GET /projects It should return a list of projects filtered by acl for registered user 1`] = `
+Array [
+  Object {
+    "id": 1,
+    "ownerId": 1,
+    "ownerOnly": "only alice can see this",
+    "published": false,
+    "title": "Project by Alice",
+  },
+  Object {
+    "id": 4,
+    "ownerId": 1,
+    "ownerOnly": "only alice can see this",
+    "published": true,
+    "title": "Published project by Alice",
+  },
+  Object {
+    "id": 5,
+    "ownerId": 2,
+    "published": true,
+    "title": "Published project by Bob",
+  },
+  Object {
+    "id": 6,
+    "ownerId": 3,
+    "published": true,
+    "title": "Published project by Eve",
+  },
+]
+`;
+
+exports[`project.route.js GET /projects/:id It should return a project for an authorized (owner) user 1`] = `
+Object {
+  "id": 1,
+  "ownerId": 1,
+  "ownerOnly": "only alice can see this",
+  "published": false,
+  "title": "Project by Alice",
+}
+`;

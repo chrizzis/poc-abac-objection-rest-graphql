@@ -1,0 +1,234 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`User Access Control should have our 3 users in the db 1`] = `
+Array [
+  Object {
+    "password": "alice",
+    "username": "alice-immutable",
+  },
+  Object {
+    "password": "bob",
+    "username": "bob-immutable",
+  },
+  Object {
+    "password": "eve",
+    "username": "eve-immutable",
+  },
+]
+`;
+
+exports[`User Access Control should not be able to see passwords with an anonymous user 1`] = `
+Object {
+  "data": Object {
+    "users": Array [
+      Object {
+        "id": 1,
+        "password": null,
+        "username": "alice-immutable",
+      },
+      Object {
+        "id": 2,
+        "password": null,
+        "username": "bob-immutable",
+      },
+      Object {
+        "id": 3,
+        "password": null,
+        "username": "eve-immutable",
+      },
+    ],
+  },
+}
+`;
+
+exports[`User Access Control should not be able to see the passwords of others with a registered user 1`] = `
+Object {
+  "data": Object {
+    "users": Array [
+      Object {
+        "id": 1,
+        "password": "alice",
+        "username": "alice-immutable",
+      },
+      Object {
+        "id": 2,
+        "password": null,
+        "username": "bob-immutable",
+      },
+      Object {
+        "id": 3,
+        "password": null,
+        "username": "eve-immutable",
+      },
+    ],
+  },
+}
+`;
+
+exports[`User Access Control should not be able to see unpublished projects of others with a registered user 1`] = `
+Object {
+  "data": Object {
+    "projects": Array [
+      Object {
+        "id": 1,
+        "ownerId": 1,
+        "ownerOnly": "only alice can see this",
+        "published": false,
+      },
+      Object {
+        "id": 4,
+        "ownerId": 1,
+        "ownerOnly": "only alice can see this",
+        "published": true,
+      },
+      Object {
+        "id": 5,
+        "ownerId": 2,
+        "ownerOnly": null,
+        "published": true,
+      },
+      Object {
+        "id": 6,
+        "ownerId": 3,
+        "ownerOnly": null,
+        "published": true,
+      },
+    ],
+  },
+}
+`;
+
+exports[`User Access Control should not be able to see unpublished projects with an anonymous user 1`] = `
+Object {
+  "data": Object {
+    "projects": Array [
+      Object {
+        "id": 4,
+        "ownerOnly": null,
+        "published": true,
+      },
+      Object {
+        "id": 5,
+        "ownerOnly": null,
+        "published": true,
+      },
+      Object {
+        "id": 6,
+        "ownerOnly": null,
+        "published": true,
+      },
+    ],
+  },
+}
+`;
+
+exports[`User Access Control should not be able to see user passwords, nor unpublished projects with an anonymous user 1`] = `
+Object {
+  "data": Object {
+    "users": Array [
+      Object {
+        "id": 1,
+        "password": null,
+        "projects": Array [
+          Object {
+            "ownerId": 1,
+            "ownerOnly": null,
+            "published": true,
+            "title": "Published project by Alice",
+          },
+        ],
+        "username": "alice-immutable",
+      },
+      Object {
+        "id": 2,
+        "password": null,
+        "projects": Array [
+          Object {
+            "ownerId": 2,
+            "ownerOnly": null,
+            "published": true,
+            "title": "Published project by Bob",
+          },
+        ],
+        "username": "bob-immutable",
+      },
+      Object {
+        "id": 3,
+        "password": null,
+        "projects": Array [
+          Object {
+            "ownerId": 3,
+            "ownerOnly": null,
+            "published": true,
+            "title": "Published project by Eve",
+          },
+        ],
+        "username": "eve-immutable",
+      },
+    ],
+  },
+}
+`;
+
+exports[`User Access Control should not be able to tunnel through graph to see unauthorized data with an anonymous user 1`] = `
+Object {
+  "data": Object {
+    "users": Array [
+      Object {
+        "id": 1,
+        "password": null,
+        "projects": Array [
+          Object {
+            "owner": Object {
+              "id": 1,
+              "password": null,
+              "username": "alice-immutable",
+            },
+            "ownerId": 1,
+            "ownerOnly": null,
+            "published": true,
+            "title": "Published project by Alice",
+          },
+        ],
+        "username": "alice-immutable",
+      },
+      Object {
+        "id": 2,
+        "password": null,
+        "projects": Array [
+          Object {
+            "owner": Object {
+              "id": 2,
+              "password": null,
+              "username": "bob-immutable",
+            },
+            "ownerId": 2,
+            "ownerOnly": null,
+            "published": true,
+            "title": "Published project by Bob",
+          },
+        ],
+        "username": "bob-immutable",
+      },
+      Object {
+        "id": 3,
+        "password": null,
+        "projects": Array [
+          Object {
+            "owner": Object {
+              "id": 3,
+              "password": null,
+              "username": "eve-immutable",
+            },
+            "ownerId": 3,
+            "ownerOnly": null,
+            "published": true,
+            "title": "Published project by Eve",
+          },
+        ],
+        "username": "eve-immutable",
+      },
+    ],
+  },
+}
+`;

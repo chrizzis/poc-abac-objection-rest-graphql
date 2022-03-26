@@ -1,0 +1,96 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Find queries & serialization Project read owned unpublished w/ registered user 1`] = `
+Object {
+  "id": 1,
+  "ownerId": 1,
+  "ownerOnly": "only alice can see this",
+  "published": false,
+  "title": "Project by Alice",
+}
+`;
+
+exports[`Find queries & serialization Project read published w/ anonymous user 1`] = `
+Object {
+  "id": 4,
+  "ownerId": 1,
+  "published": true,
+  "title": "Published project by Alice",
+}
+`;
+
+exports[`Find queries & serialization User read access w/ anonymous user 1`] = `
+Object {
+  "email": "alice@email.com",
+  "firstName": "Alice",
+  "id": 1,
+  "lastName": "Smith",
+  "role": "user",
+  "username": "alice-immutable",
+}
+`;
+
+exports[`Find queries & serialization User read access w/ owner user 1`] = `
+Object {
+  "email": "alice@email.com",
+  "firstName": "Alice",
+  "id": 1,
+  "lastName": "Smith",
+  "password": "alice",
+  "role": "user",
+  "username": "alice-immutable",
+}
+`;
+
+exports[`Find queries & serialization User-Project graph read access w/ anonymous user 1`] = `
+Array [
+  Object {
+    "email": "alice@email.com",
+    "firstName": "Alice",
+    "id": 1,
+    "lastName": "Smith",
+    "projects": Array [
+      Object {
+        "id": 4,
+        "ownerId": 1,
+        "published": true,
+        "title": "Published project by Alice",
+      },
+    ],
+    "role": "user",
+    "username": "alice-immutable",
+  },
+  Object {
+    "email": "bob@email.com",
+    "firstName": "Bob",
+    "id": 2,
+    "lastName": "Smith",
+    "projects": Array [
+      Object {
+        "id": 5,
+        "ownerId": 2,
+        "published": true,
+        "title": "Published project by Bob",
+      },
+    ],
+    "role": "user",
+    "username": "bob-immutable",
+  },
+  Object {
+    "email": "eve@email.com",
+    "firstName": "Eve",
+    "id": 3,
+    "lastName": "Smith",
+    "projects": Array [
+      Object {
+        "id": 6,
+        "ownerId": 3,
+        "published": true,
+        "title": "Published project by Eve",
+      },
+    ],
+    "role": "user",
+    "username": "eve-immutable",
+  },
+]
+`;

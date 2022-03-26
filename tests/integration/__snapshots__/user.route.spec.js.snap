@@ -1,0 +1,72 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`user.route.js GET /users It should return a list of users 1`] = `
+Array [
+  Object {
+    "email": "alice@email.com",
+    "firstName": "Alice",
+    "id": 1,
+    "lastName": "Smith",
+    "role": "user",
+    "username": "alice-immutable",
+  },
+  Object {
+    "email": "bob@email.com",
+    "firstName": "Bob",
+    "id": 2,
+    "lastName": "Smith",
+    "role": "user",
+    "username": "bob-immutable",
+  },
+  Object {
+    "email": "eve@email.com",
+    "firstName": "Eve",
+    "id": 3,
+    "lastName": "Smith",
+    "role": "user",
+    "username": "eve-immutable",
+  },
+]
+`;
+
+exports[`user.route.js GET /users/:id It should return a user filtered by acl 1`] = `
+Object {
+  "email": "alice@email.com",
+  "firstName": "Alice",
+  "id": 1,
+  "lastName": "Smith",
+  "role": "user",
+  "username": "alice-immutable",
+}
+`;
+
+exports[`user.route.js GET /users/:id It should return a user for the current user 1`] = `
+Object {
+  "email": "alice@email.com",
+  "firstName": "Alice",
+  "id": 1,
+  "lastName": "Smith",
+  "password": "alice",
+  "role": "user",
+  "username": "alice-immutable",
+}
+`;
+
+exports[`user.route.js GET /users/:id/projects It should return a list of projects for the owner 1`] = `
+Array [
+  Object {
+    "id": 1,
+    "ownerId": 1,
+    "ownerOnly": "only alice can see this",
+    "published": false,
+    "title": "Project by Alice",
+  },
+  Object {
+    "id": 4,
+    "ownerId": 1,
+    "ownerOnly": "only alice can see this",
+    "published": true,
+    "title": "Published project by Alice",
+  },
+]
+`;

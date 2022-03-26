@@ -1,0 +1,18 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`app.js Index route should return the static site from the index route 1`] = `
+"<!doctype html>
+<html>
+
+<head>
+  <title>This is the title of the webpage!</title>
+</head>
+
+<body>
+  <p>This is an example paragraph. Anything in the <strong>body</strong> tag will appear on the page, just like this
+    <strong>p</strong> tag and its contents.
+  </p>
+</body>
+
+</html>"
+`;
