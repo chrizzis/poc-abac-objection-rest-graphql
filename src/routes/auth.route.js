@@ -8,10 +8,8 @@ router.post('/login', async (req, res, next) => {
   const { username, password } = req.body
   try {
     let isMatch = false;
-    // const user = await User.query().where({ username, password }).first()
     const user = await User.query().findOne({ username })
     if (user) {
-      // isMatch = comparePasswords(password, user.password)
       isMatch = (password === user.password)
     }
 

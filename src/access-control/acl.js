@@ -2,22 +2,11 @@ import { defineAbility } from '@casl/ability'
 import Role from './role.js'
 
 /**
- * Rules for authorizing a user requesting to perform an action on a resource.
+ * Rules for authorizing a user on a resource.
  * 
  * @param user
  */
-// const acl = (user) => { return (resource, body, relation) => { casl shit with baked in user context }}
-// also, since casl is coupled to this, should I pull { rulesToQuery, permittedFieldsOf } in here?
-function acl(user, resource, body, relation) {
-  if (!!resource && !!body) {
-    if (resource.modelProperty !== 'acl-user')
-      throw new Error('resource is NOT an instance of User class')
-    if (relation === 'projects') {
-      if (body.modelProperty !== 'acl-project')
-        throw new Error('input is NOT an instance of Pet class')
-    } else if (body.modelProperty !== 'acl-user')
-      throw new Error('input is NOT an instance of User class')
-  }
+function acl(user) {
 
   return defineAbility((allow, forbid) => {
     allow('read', 'User')
@@ -37,15 +26,6 @@ function acl(user, resource, body, relation) {
     } else if (user.role === Role.Admin) {
       allow('read', 'Project')
       allow('manage', 'Project', { ownerId: user.id })
-    }
-
-    // TODO: this is unnecessary as it is defined above
-    if (relation === 'projects') {
-      // resource = user, body = project
-      allow('read', 'Project', { id: user.id })
-      allow('create', 'Project', { id: user.id })
-    } else if (relation === 'owner') {
-      // resource = project, body = user
     }
   })
 }

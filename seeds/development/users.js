@@ -23,7 +23,7 @@ async function seed(knex) {
       username: 'alice-immutable',
       password: 'alice',
       projects: [
-        // TODO: ownerId is TEMP until i make a trx
+        // TODO: ownerId is TEMP until trx
         { id: 1, ownerId: 1, title: 'Project by Alice', ownerOnly: 'only alice can see this' },
         { id: 4, ownerId: 1, title: 'Published project by Alice', ownerOnly: 'only alice can see this', published: true },
       ],

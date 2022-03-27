@@ -23,7 +23,14 @@ function permissibleEntity(entity, permitted) {
     }, {});
 }
 
-// for now, only one level deep
+/**
+ * Assumes all entities in a list of children have the same fields
+ * for now, only one level deep
+ * @param {*} ability the ability of the current user
+ * @param {*} root
+ * @param {*} relationName the name of the relation to a nested entity or entities 
+ * @returns A tree whose content is visible for the provided ability
+ */
 function permissibleTree(ability, root, relationName) {
   // TODO: with one param, this can be retrieved from external context
   // const ability = acl(user)
@@ -53,18 +60,16 @@ function permissibleTree(ability, root, relationName) {
 
 export default Model => {
   class RestAuthQueryBuilder extends Model.QueryBuilder {
-    // this method filters a list of results to accessible content (by modifying query.where)
-    // to provide all or nothing access, use authUser
-    // to filter an entity to permissible fields, use authorizeRead
+    /**
+     * Filters a list to accessible entities
+     * @param {*} user 
+     * @param {*} reqConditions 
+     * @returns 
+     */
     accessibleBy(user, reqConditions = {}) {
-      console.debug(`accessibleBy:${JSON.stringify(user)}`)
-      console.error(`TODO: enable requested reqConditions (shared endpoint will set by default) merge with accessible reqConditions:${JSON.stringify(reqConditions)}`)
-
       const ability = acl(user)
       const convert = rule => rule.inverted ? { $not: rule.conditions } : rule.conditions
       const subjectType = this.modelClass().name
-      console.error(`TODO: get subjectType from model: ${subjectType}`)
-
       const aclConditions = rulesToQuery(ability, 'read', subjectType, convert) || {};
 
       this.context({
@@ -73,34 +78,28 @@ export default Model => {
       })
       return this.whereChain(reqConditions, aclConditions)
     }
-    // this method provides all or nothing access
-    // to filter a list of results to accessible content, use accessibleBy
-    // to filter an entity to permissible fields, use authorizeRead
+
+    /**
+     * Provides all or nothing access to resource or resources
+     * @param {*} currentUser 
+     * @returns 
+     */
     authUser(currentUser) {
       return this.context({
         _authUser: true,
         _user: currentUser,
         _ability: acl(currentUser),
-        // _class: this.modelClass(),
       })
     }
     // TODO: current behavior (authorizeRead) is to prune unauthed fields from a model instance, but since it is async, cant be used with withGraphFetched.modifiers
     // withGraphFetched.selectAccessible FOR NOW is going to have to wait until last call to afterFind ({result: [User.Project], i:[],r:undefined})
     //  then drill into the nodes in the graph to authorizeRead (yuck - what if the graph is huge?!)
     selectAccessible(currentUser) {
-      // const ability = acl(currentUser)
       const resource = this.modelClass().name
-      // TODO: resource must be a hydrated object
-      // const permitted = permittedFieldsOf(ability, 'read', resource, {
-      //   fieldsFrom: rule => rule.fields
-      // })
-      // TODO: build select array from permitted
-      // this.select(permitted)
       return this.context({
         _selectAccessible: true,
         _user: currentUser,
         _ability: acl(currentUser),
-        // _class: this.modelClass(),
       })
     }
     whereChain(reqConditions, aclConditions) {
@@ -110,7 +109,6 @@ export default Model => {
         const conditionOrSubquery = condition[term]
         // TODO: for now, only supporting one level of subqueries
         if (Array.isArray(conditionOrSubquery)) {
-          console.error(`whereChain: subquery found, need to add it!`)
           this[term](function () {
             conditionOrSubquery.forEach(c => {
               const subqueryTerm = Object.keys(c)[0]
@@ -135,15 +133,9 @@ export default Model => {
     static get QueryBuilder() {
       return RestAuthQueryBuilder
     }
-    /**
-     * static hooks only run once per query.
-     * complex case where this is insufficient: published project can have premium content
-     *  anonymous users can see the 'free' project, while gated users can also see the premium content
-     * @param {StaticHookArguments} args 
-     */
+
     static async afterFind(args) {
       await super.afterFind(args)
-      // User.query().withGraphFetched('projects'): result = [Project], items = [User]
       const { result, items, inputItems, relation, context: queryContext } = args
       if (queryContext._authUser) {
         if (queryContext._accessibleBy) {
@@ -154,11 +146,7 @@ export default Model => {
         }
         const { _ability: ability, _user: user } = queryContext
         let resource = result || items
-        // const ability = acl(queryContext._user)
         if (Array.isArray(resource)) { // Objection result and items are always arrays, even if findOne
-          // TODO: authUser is all or nothing
-          // TODO: i could auth the list, but why would i want to throw if one item in the list isnt authed
-          // TODO: instead, use accessibleBy to filter the list to acl
           resource = resource[0]
         }
         if (ability.cannot('read', resource)) {
@@ -198,15 +186,13 @@ export default Model => {
         return permissibleResources
       }
     }
-    // static async beforeFind(args) {
-    //   await super.beforeFind(args)
-    //   const { asFindQuery, items, inputItems, relation, context: queryContext } = args
-    //   // TODO: to enable, add context in RestAuthQueryBuilder.accessibleBy
-    //   // console.info(`accessibleBy.beforeFind context: ${queryContext.ability.rules}`)
-    // }
 
+    /**
+     * Filters model instance to fields user has permission to read
+     * @param {*} user 
+     * @returns 
+     */
     authorizeRead(user) {
-      console.debug(`authorizeRead - user: ${user}`)
       const resource = this
       const ability = acl(user)
       const fields = Object.keys(resource) // TODO: deep

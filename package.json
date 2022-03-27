@@ -1,7 +1,7 @@
 {
-  "name": "express-pg-knex-objection-jwt",
+  "name": "poc-abac-objection-rest-graphql",
   "version": "1.0.0",
-  "description": "template for a basic express server with tests",
+  "description": "Demo showing GraphQL integration with a REST API with ABAC using Objection",
   "main": "src/index.js",
   "scripts": {
     "k:srun": "NODE_ENV=development knex seed:run --env development",
@@ -16,14 +16,14 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/chrizzis/express-pg-knex-objection-jwt.git"
+    "url": "git+https://github.com/chrizzis/poc-abac-objection-rest-graphql.git"
   },
   "author": "Christian Seabrook",
   "license": "ISC",
   "bugs": {
-    "url": "https://github.com/chrizzis/express-pg-knex-objection-jwt/issues"
+    "url": "https://github.com/chrizzis/poc-abac-objection-rest-graphql/issues"
   },
-  "homepage": "https://github.com/chrizzis/express-pg-knex-objection-jwt#readme",
+  "homepage": "https://github.com/chrizzis/poc-abac-objection-rest-graphql#readme",
   "type": "module",
   "engines": {
     "node": "16.x",

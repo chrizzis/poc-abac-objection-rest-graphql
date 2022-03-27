@@ -20,8 +20,6 @@ class Project extends BaseModel {
     return {
       owner: {
         relation: this.BelongsToOneRelation,
-        // modelClass: 'user.model',
-        // modelClass: 'User',
         modelClass: User,
         join: {
           from: 'Project.ownerId',

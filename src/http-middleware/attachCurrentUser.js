@@ -17,10 +17,8 @@ const defaultUser = {
  * @param {*} next 
  */
 const attachCurrentUser = (req, res, next) => {
-  console.debug(`middleware.attachCurrentUser`)
   const { authorization } = req.headers
   if (!authorization) {
-    console.debug(`middleware.attachCurrentUser - setting default user`)
     req.user = defaultUser
     // https://stackoverflow.com/questions/16810449/when-to-use-next-and-return-next-in-node-js
     return next()
@@ -31,7 +29,6 @@ const attachCurrentUser = (req, res, next) => {
     return next()
   }
 
-  console.debug(`middleware.attachCurrentUser - starting authN`)
   const [match, token] = headerMatch;
   let decoded = false;
   try {
@@ -47,7 +44,6 @@ const attachCurrentUser = (req, res, next) => {
   }
   const { id, role } = decoded
   req.user = { id, role }
-  console.log(`TODO: req.user = ${decoded}`)
 
   next()
 }

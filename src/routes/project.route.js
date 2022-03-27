@@ -1,7 +1,6 @@
 import { Router } from 'express'
 import { Project } from '../models/index.js'
 
-// const router = express.Router()
 const router = new Router();
 
 router.get(`/projects`, async (req, res, next) => {

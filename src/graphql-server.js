@@ -14,9 +14,7 @@ const integrateGraphqlServer = async ({ db, app }) => {
   const httpServer = http.createServer(app);
 
   const server = new ApolloServer({
-    // schema: createSchema(db),
     typeDefs: createSchema(db),
-    // resolvers?
     introspection: isDev,
     playground: isDev,
     cors: false,
@@ -28,9 +26,6 @@ const integrateGraphqlServer = async ({ db, app }) => {
   });
 
   await server.start()
-
-  // app.use(server.graphqlPath, withAuth(server));
-  // app.use(server.graphqlPath, server);
 
   server.applyMiddleware({ app });
 

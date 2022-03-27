@@ -114,7 +114,6 @@ const toWhereArray = (reqConditions, aclConditions = {}) => {
       subquery.push({ [clause]: { [key]: value } })
     }
     if (subquery.length > 1) {
-      // mergedFilters.push({ where: Object.assign(mergedAnd) })
       mergedFilters.push({ where: mergedAnd })
       mergedFilters.push({ ['andWhere']: subquery })
     } else if (subquery.length) {

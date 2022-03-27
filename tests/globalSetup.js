@@ -1,4 +1,3 @@
-// import dotenv from 'dotenv'
 import Knex from 'knex'
 import knexConfigs from '../knexfile.js'
 import pool from '../src/db.js'
@@ -20,24 +19,15 @@ async function createTestDatabase() {
   } catch (error) {
     throw new Error(error)
   }
-  // TODO: i dont think i need this, it doesn't seem to change jest behavior (once/watch)
-  // finally {
-  //   await knex.destroy()
-  // }
 }
 
 async function createTestTables() {
   const knex = pool
   try {
-    // await knex.migrate.rollback()
     await knex.migrate.latest()
   } catch (error) {
     throw new Error(error)
   }
-  // TODO: causing jest --watch to crash
-  // finally {
-  //   await knex.destroy()
-  // }
 }
 
 export default async () => {

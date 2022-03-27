@@ -23,11 +23,9 @@ describe('function interpret - equality ONLY', () => {
           { where: { id: 'req.params.id', ownerId: 'req.params.userId' } },
         ])
       })
-      // test(`GET /entities?or={rating:[5,4],size:'large'}`, () => {
       test(`GET /entities?or={rating:4,size:'large'}`, () => {
         reqConditions = {
           $or: {
-            // rating: [5, 4],
             rating: 5,
             size: 'large',
           }
@@ -35,8 +33,6 @@ describe('function interpret - equality ONLY', () => {
         const queryFilters = interpret(reqConditions)
         expect(queryFilters).toEqual([
           { where: { rating: 5 } },
-          // { orWhere: { rating: 4 } },
-          // TODO: { where: { rating: { in: [5,4] } } }, or whatever format knex needs
           { orWhere: { size: 'large' } },
         ])
       })
@@ -54,7 +50,6 @@ describe('function interpret - equality ONLY', () => {
           { where: { id: 'req.params.id', published: true } },
         ])
       })
-      // test(`GET /users/:userId/published?or={rating:[5,4],size:'large'}`, () => {
       test(`GET /users/:userId/published?or={rating:5,size:'large'}`, () => {
         reqConditions = {
           $limitOr: {
@@ -64,7 +59,6 @@ describe('function interpret - equality ONLY', () => {
             ownerId: 'req.params.userId'
           },
           $or: {
-            // rating: [5, 4],
             rating: 5,
             size: 'large',
           }
@@ -75,7 +69,6 @@ describe('function interpret - equality ONLY', () => {
           {
             andWhere: [
               { where: { rating: 5 } },
-              // { orWhere: { rating: 4 } },
               { orWhere: { size: 'large' } },
             ]
           },
@@ -178,12 +171,10 @@ describe('function interpret - equality ONLY', () => {
           { where: { id: 'req.params.id', ownerId: 'req.params.userId', published: true } },
         ])
       })
-      // test('GET /users/:userId/acl-entities/:id?or={rating:[5,4]}', () => {
       test('GET /users/:userId/acl-entities/:id?or={rating:5}', () => {
         aclConditions = {
           $or: [{
             published: true,
-            // TODO: default to and[key]
             ownerId: 'req.user.id',
           }]
         }
@@ -194,20 +185,15 @@ describe('function interpret - equality ONLY', () => {
           },
           $or: {
             rating: 5
-            // rating: [5, 4]
           }
         }
         const queryFilters = interpret(reqConditions, aclConditions)
-        // TODO: req overwrites ownerId (and acl allows it b/c it is an acl-or which gets and-ed)
         expect(queryFilters).toEqual([
           { where: { id: 'req.params.id', ownerId: 'req.params.userId' } },
           {
             andWhere: [
               { where: { published: true } },
-              // TODO: this gets skipped b/c and[ownerId]
-              // { orWhere: { ownerId: 'req.user.id' } },
               { orWhere: { rating: 5 } },
-              // { orWhere: { rating: 4 } },
             ]
           },
         ])

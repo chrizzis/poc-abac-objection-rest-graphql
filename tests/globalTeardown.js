@@ -1,4 +1,3 @@
-// import dotenv from 'dotenv'
 import Knex from 'knex'
 import knexConfigs from '../knexfile.js'
 
@@ -16,7 +15,7 @@ export default async () => {
     await knex.raw(`DROP DATABASE IF EXISTS ${database}`)
     console.debug(`${database} database successfully dropped`)
     await knex.destroy()
-    // TODO: properly close graphql server on teardown (i think this is causing `error Command failed with exit code 1.` on test:once)
+    // TODO: properly close graphql server on teardown (async bug?)
     // await global.httpServer.server.close()
   } catch (error) {
     console.debug(error)

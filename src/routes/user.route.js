@@ -3,14 +3,7 @@ import Role from '../access-control/role.js'
 import roleRequired from '../http-middleware/roleRequired.js'
 import { User, Project } from '../models/index.js'
 
-// const router = express.Router()
 const router = new Router();
-
-// https://vincit.github.io/objection.js/api/types/#type-relationexpression
-// https://vincit.github.io/objection.js/api/query-builder/eager-methods.html#withgraphfetched
-// router.get(`/users?children=['projects']`, async (req, res, next) => {
-//   // see access-control.test:User-Project graph for an implementation
-// })
 
 router.get(`/users`, async (req, res, next) => {
   try {
@@ -36,7 +29,6 @@ router.get(`/users/:id`, async (req, res, next) => {
 
 })
 
-// TODO: controllers/services to reuse nested behavior
 router.get(`/users/:userId/projects`, roleRequired([Role.Owner, Role.Admin]),
   async (req, res, next) => {
     try {

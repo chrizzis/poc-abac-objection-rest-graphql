@@ -3,8 +3,6 @@ import fs from 'fs'
 import path from 'path'
 const __dirname = path.resolve()
 
-// TODO: move to root as config.js
-
 const { NODE_ENV } = process.env
 const envFile = `/.env.${NODE_ENV}`
 try {
@@ -14,11 +12,15 @@ try {
     throw new Error('file not found')
   }
 } catch (e) {
-  // TODO: if NODE_ENV === production (it should be .env when deployed)
-  console.error(`config: ${e}`)
-  console.error(`.env.${NODE_ENV} NOT FOUND!`)
-  console.error(`using .env.example`)
-  dotenv.config({ path: path.join(__dirname, `/.env.example`) })
+  if (NODE_ENV == 'production') {
+    throw new Error(`TODO: prod:heroku?`)
+    // dotenv.config({ path: path.join(__dirname, `/.env`) })
+  } else {
+    // console.error(`config: ${e}`)
+    // console.error(`.env.${NODE_ENV} NOT FOUND!`)
+    // console.error(`using .env.example`)
+    dotenv.config({ path: path.join(__dirname, `/.env.example`) })
+  }
 }
 
 const {
@@ -33,7 +35,7 @@ const {
 
 const apiUrl = `${apiBase}/${version}`
 
-// Different situations
+// boolean checks
 const env = {
   development: NODE_ENV === 'development',
   test: NODE_ENV === 'test',
@@ -50,9 +52,14 @@ let dbUrl = {
 }
 
 // TODO: used in knex config ctx
-const currentEnv = Object.entries(env).find(state => {
-  return !!state[1]
-})[0]
+let currentEnv
+try {
+  currentEnv = Object.entries(env).find(state => {
+    return !!state[1]
+  })[0]
+} catch (e) {
+  throw new Error('currentEnv not populated')
+}
 
 // Database
 const db = {
