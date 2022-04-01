@@ -29,7 +29,7 @@ const integrateGraphqlServer = async ({ db, app }) => {
 
   server.applyMiddleware({ app });
 
-  return { server, app, httpServer };;
+  return { server, app, httpServer };
 };
 
 export default integrateGraphqlServer;

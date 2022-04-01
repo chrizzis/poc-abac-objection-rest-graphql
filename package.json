@@ -9,8 +9,8 @@
     "k:rollback": "NODE_ENV=development knex migrate:rollback --env development",
     "test": "NODE_ENV=test node --experimental-vm-modules node_modules/jest/bin/jest.js --detectOpenHandles --setupFiles dotenv/config --watch --verbose",
     "test:once": "NODE_ENV=test node --experimental-vm-modules node_modules/jest/bin/jest.js --detectOpenHandles --setupFiles dotenv/config --verbose",
-    "test:feature": "NODE_ENV=test LOG_LEVEL=debug node --experimental-vm-modules node_modules/jest/bin/jest.js ./tests/integration/graphql.spec.js --detectOpenHandles --setupFiles dotenv/config --verbose",
-    "test:feature:watch": "NODE_ENV=test LOG_LEVEL=debug node --experimental-vm-modules node_modules/jest/bin/jest.js ./tests/integration/graphql.spec.js --detectOpenHandles --setupFiles dotenv/config --watch --verbose",
+    "test:feature": "NODE_ENV=test LOG_LEVEL=debug node --experimental-vm-modules node_modules/jest/bin/jest.js ./tests/integration/graphql.route.spec.js --detectOpenHandles --setupFiles dotenv/config --verbose",
+    "test:feature:watch": "NODE_ENV=test LOG_LEVEL=debug node --experimental-vm-modules node_modules/jest/bin/jest.js ./tests/integration/graphql.route.spec.js --detectOpenHandles --setupFiles dotenv/config --watch --verbose",
     "start": "NODE_ENV=production node ./src/index.js",
     "dev": "NODE_ENV=development nodemon ./src/index.js"
   },

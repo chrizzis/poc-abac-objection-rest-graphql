@@ -8,6 +8,13 @@ A demo app showing GraphQL integration with a REST API with ABAC using Objection
 - `jsonwebtoken` - authN/authZ using JWT token and RBAC/ABAC
 - `apollo, graphql, objection-graphql` - graphql API integration with Objection ABAC
 
+## Proof of concept tasks demonstrating existing REST ABAC behavior with GraphQL:
+- [x] All-or-nothing authorization
+- [x] Filtering entities in a collection/graph to authorized content
+- [x] Filtering fields on entities in a collection/graph to permissible fields
+- [ ] Not having to explicitly add fields in a GraphQL query necessary for fetching related resources
+- [ ] Authorization middleware and integration tests
+
 ## Getting Started
 
 ### Local Development/Testing
@@ -25,8 +32,19 @@ A demo app showing GraphQL integration with a REST API with ABAC using Objection
   - `yarn test`
 - Serving locally:
   - `yarn start`
-  - cURL commands:
-    - REST: `curl http://localhost:3000/api/v0/users`
-    - GraphQL: `TODO: auth middleware and integration api tests`
+  - Recipes (curl):
+    - Anonymous requests:
+      - REST
+        - get a list of users: `curl http://localhost:3000/api/v0/users`
+        - get a list of projects:  `curl http://localhost:3000/api/v0/projects`
+        - get a list of projects for a user:  `curl http://localhost:3000/api/v0/users/1/projects`
+      - GraphQL: `TODO: auth middleware and integration api tests`
+    - Get token and send with requests:
+      - REST: TODO
+      - GraphQL: TODO
 - Developing:
   - `yarn dev`
+
+## TODO:
+- graphql nested queries need to explicitly specify fields used in relation mapping
+- write checklist of integration tasks complete
