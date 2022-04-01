@@ -13,7 +13,7 @@ A demo app showing GraphQL integration with a REST API with ABAC using Objection
 - [x] Filtering entities in a collection/graph to authorized content
 - [x] Filtering fields on entities in a collection/graph to permissible fields
 - [ ] Not having to explicitly add fields in a GraphQL query necessary for fetching related resources
-- [ ] Authorization middleware and integration tests
+- [ ] Authorization middleware (validating JWT and adding user to graphql context) and integration tests
 
 ## Getting Started
 
